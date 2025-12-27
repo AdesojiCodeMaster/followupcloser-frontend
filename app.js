@@ -8,7 +8,26 @@ async function generate() {
   const output = document.getElementById("output");
 
   // Show loading state
-  output.innerText = "⏳ Generating follow-up message...";
+  output.innerText = "⏳ Thinking through the best follow-up for you… ";
+
+  const loadingMessages = [
+  "Understanding your situation…",
+  "Crafting the right tone…",
+  "Writing a natural follow-up…"
+];
+
+let i = 0;
+const loadingEl = document.getElementById("loading");
+
+const interval = setInterval(() => {
+  loadingEl.innerText = loadingMessages[i % loadingMessages.length];
+  i++;
+}, 1200);
+
+  
+clearInterval(interval);
+  
+                             
 
   try {
     const response = await fetch(
