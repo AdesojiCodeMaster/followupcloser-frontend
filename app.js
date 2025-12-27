@@ -1,4 +1,3 @@
-
 async function generate() {
   const lead = document.getElementById("lead").value;
   const chat = document.getElementById("chat").value;
@@ -7,27 +6,22 @@ async function generate() {
 
   const output = document.getElementById("output");
 
-  // Show loading state
-  output.innerText = "⏳ Thinking through the best follow-up for you… ";
-
   const loadingMessages = [
-  "Understanding your situation…",
-  "Crafting the right tone…",
-  "Writing a natural follow-up…"
-];
+    "Understanding your situation…",
+    "Crafting the right tone…",
+    "Writing a natural follow-up…"
+  ];
 
-let i = 0;
-const loadingEl = document.getElementById("loading");
+  let i = 0;
 
-const interval = setInterval(() => {
-  loadingEl.innerText = loadingMessages[i % loadingMessages.length];
-  i++;
-}, 1200);
+  // ✅ SHOW IMMEDIATE FEEDBACK
+  output.innerText = loadingMessages[0];
 
-  
-clearInterval(interval);
-  
-                             
+  // ✅ START ROTATING LOADING TEXT
+  const interval = setInterval(() => {
+    output.innerText = loadingMessages[i % loadingMessages.length];
+    i++;
+  }, 1200);
 
   try {
     const response = await fetch(
@@ -41,11 +35,15 @@ clearInterval(interval);
 
     const data = await response.json();
 
-    // Show AI result
+    // ✅ STOP LOADING
+    clearInterval(interval);
+
+    // ✅ SHOW RESULT
     output.innerText = data.result;
 
   } catch (error) {
+    clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
   }
-}
+   }
 
