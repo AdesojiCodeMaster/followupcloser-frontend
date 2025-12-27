@@ -19,7 +19,7 @@ async function generate() {
   output.innerText = loadingMessages[0];
 
   // ✅ START ROTATING LOADING TEXT
-  const interval = setInterval(() => {
+  /* const interval = setInterval(() => {
     output.innerText = loadingMessages[i % loadingMessages.length];
     i++;
   }, 1200);
@@ -47,6 +47,35 @@ async function generate() {
   } catch (error) {
     clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
-  }
+  }*/
+
+  const interval = setInterval(() => {
+  loadingEl.innerText = loadingMessages[i % loadingMessages.length];
+  i++;
+}, 1200);
+
+try {
+  const response = await fetch(
+    "https://followupcloser-backend.onrender.com/api/generate",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lead, chat, type, tone })
+    }
+  );
+
+  const data = await response.json();
+
+  clearInterval(interval);
+  loadingEl.innerText = "";
+
+  output.innerText = data.result;
+
+} catch (error) {
+  clearInterval(interval);
+  loadingEl.innerText = "";
+  output.innerText = "❌ Something went wrong. Please try again.";
+}
+  
    }
 
