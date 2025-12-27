@@ -19,7 +19,7 @@ async function generate() {
   output.innerText = loadingMessages[0];
 
   // ✅ START ROTATING LOADING TEXT
-   const interval = setInterval(() => {
+  const interval = setInterval(() => {
     output.innerText = loadingMessages[i % loadingMessages.length];
     i++;
   }, 1200);
@@ -40,14 +40,10 @@ async function generate() {
     clearInterval(interval);
 
     // ✅ SHOW RESULT
-   output.innerText = data.result;
-    
-          
+    output.innerText = data.result;
 
   } catch (error) {
     clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
   }
-  
-   }
-
+}
