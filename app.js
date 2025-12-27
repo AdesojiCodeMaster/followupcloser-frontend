@@ -8,6 +8,7 @@ async function generate() {
 
   const loadingMessages = [
     "Understanding your situation…",
+    "Thinking through the best follow-up for you…",
     "Crafting the right tone…",
     "Writing a natural follow-up…"
   ];
