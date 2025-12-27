@@ -41,7 +41,7 @@ async function generate() {
 
     // ✅ SHOW RESULT
    // output.innerText = data.result;
-    output.innerHTML = data.result
+    output.innerText = data.result
   .replace("Message:", "<strong>Message:</strong>")
   .replace("Best time:", "<br><strong>Best time:</strong>");
           
