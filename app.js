@@ -63,8 +63,9 @@ function isValidContact(value) {
 
 
 //Submit function 
-async function submitContact() {
+function submitContact() {
   const contactInput = document.getElementById("contact");
+  const tallyInput = document.getElementById("tallyContact");
   const message = document.getElementById("captureMsg");
   const value = contactInput.value.trim();
 
@@ -73,23 +74,11 @@ async function submitContact() {
     return;
   }
 
-  const formData = new FormData();
+  tallyInput.value = value;
 
-  // 🔑 MUST MATCH TALLY FIELD ID
-  formData.append("contact", value);
+  document.getElementById("tallyForm").submit();
 
-  try {
-    fetch("https://tally.so/r/ODlRzY", {
-      method: "POST",
-      mode: "no-cors",
-      body: formData
-    });
-
-    message.innerText = "Saved! We’ll send you useful follow-up tips.";
-    contactInput.value = "";
-
-  } catch (err) {
-    message.innerText = "Could not save. Please try again.";
-  }
-      }
-      
+  message.innerText = "Saved! We’ll send you useful follow-up tips.";
+  contactInput.value = "";
+}
+  
