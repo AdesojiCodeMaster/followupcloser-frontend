@@ -41,9 +41,49 @@ async function generate() {
 
     // ✅ SHOW RESULT
     output.innerText = data.result;
+    document.getElementById("captureBox").style.display = "block";
+    
 
   } catch (error) {
     clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
+  }
+}
+
+
+
+
+//validation function 
+function isValidContact(value) {
+  const emailRegex = /\S+@\S+\.\S+/;
+  const phoneRegex = /^\+?\d{10,15}$/;
+  return emailRegex.test(value) || phoneRegex.test(value);
+    }
+
+
+
+//Submit function 
+async function submitContact() {
+  const contactInput = document.getElementById("contact");
+  const message = document.getElementById("captureMsg");
+  const value = contactInput.value.trim();
+
+  if (!isValidContact(value)) {
+    message.innerText = "Please enter a valid email or WhatsApp number.";
+    return;
+  }
+
+  try {
+    await fetch("https://tally.so/r/dWNOXK", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contact: value })
+    });
+
+    message.innerText = "Saved! We’ll send you useful follow-up tips.";
+    contactInput.value = "";
+
+  } catch {
+    message.innerText = "Could not save. Please try again.";
   }
 }
