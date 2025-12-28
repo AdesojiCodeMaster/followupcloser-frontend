@@ -77,7 +77,7 @@ async function submitContact() {
   formData.append("response", value);
 
   try {
-    await fetch("https://tally.so/r/abc123", {
+    await fetch("https://tally.so/r/ODlRzY", {
       method: "POST",
       mode: "no-cors",
       body: formData
