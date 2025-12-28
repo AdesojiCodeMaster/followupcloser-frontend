@@ -77,16 +77,18 @@ async function submitContact() {
   formData.append("response", value);
 
   try {
-    await fetch("https://tally.so/r/ODlRzY", {
+    await fetch("https://tally.so/r/abc123", {
       method: "POST",
+      mode: "no-cors",
       body: formData
     });
 
+    // ⚠️ We assume success because Tally does not expose response
     message.innerText = "Saved! We’ll send you useful follow-up tips.";
     contactInput.value = "";
 
   } catch (err) {
     message.innerText = "Could not save. Please try again.";
   }
-      }
-    
+}
+
