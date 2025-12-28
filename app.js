@@ -74,21 +74,22 @@ async function submitContact() {
   }
 
   const formData = new FormData();
-  formData.append("response", value);
+
+  // 🔑 MUST MATCH TALLY FIELD ID
+  formData.append("contact", value);
 
   try {
-    await fetch("https://tally.so/r/ODlRzY", {
+    fetch("https://tally.so/r/ODlRzY", {
       method: "POST",
       mode: "no-cors",
       body: formData
     });
 
-    // ⚠️ We assume success because Tally does not expose response
     message.innerText = "Saved! We’ll send you useful follow-up tips.";
     contactInput.value = "";
 
   } catch (err) {
     message.innerText = "Could not save. Please try again.";
   }
-}
-
+      }
+      
