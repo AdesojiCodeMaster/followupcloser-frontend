@@ -73,17 +73,20 @@ async function submitContact() {
     return;
   }
 
+  const formData = new FormData();
+  formData.append("response", value);
+
   try {
-    await fetch("https://tally.so/r/dWNOXK", {
+    await fetch("https://tally.so/r/ODlRzY", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contact: value })
+      body: formData
     });
 
     message.innerText = "Saved! We’ll send you useful follow-up tips.";
     contactInput.value = "";
 
-  } catch {
+  } catch (err) {
     message.innerText = "Could not save. Please try again.";
   }
-}
+      }
+    
