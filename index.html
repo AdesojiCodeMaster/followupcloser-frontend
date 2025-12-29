@@ -256,7 +256,7 @@ Used by salespeople in real estate, auto sales, insurance, and service businesse
     Save this follow-up and get better timing tips next time
   </p>
   <iframe
-    data-tally-src="https://tally.so/embed/ODlRzY?hideTitle=1&transparentBackground=1"
+    data-tally-src="https://tally.so/embed/ODlRzY?hideTitle=1&transparentBackground=1&onSubmit=onTallySubmit"
     loading="lazy"
     width="100%"
     height="140"
@@ -297,6 +297,13 @@ Used by salespeople in real estate, auto sales, insurance, and service businesse
     s.onerror = v;
     d.body.appendChild(s);
   }
+
+  window.onTallySubmit = function () {
+  localStorage.setItem("contactSubmitted", "true");
+  document.getElementById("captureBox").style.display = "none";
+};
+    
+    
   </script>
   
 </body>
