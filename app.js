@@ -67,13 +67,13 @@ async function generate() {
   const captureBox = document.getElementById("captureBox");
 
   // -----------------------------
-  // 🔐 GENERATION GATE LOGIC
+  // 🔐 GENERATION GATE
   // -----------------------------
   const genCount = Number(localStorage.getItem("genCount") || 0);
-  const hasContact = localStorage.getItem("contactSubmitted") === "true";
+  const unlocked = localStorage.getItem("contactUnlocked") === "true";
 
-  // Allow only first generation without contact
-  if (genCount >= 1 && !hasContact) {
+  // Allow only ONE free generation
+  if (genCount >= 1 && !unlocked) {
     captureBox.style.display = "block";
     output.innerText =
       "🔒 Please save your contact to continue generating follow-ups.";
@@ -109,38 +109,23 @@ async function generate() {
     );
 
     const data = await response.json();
-
     clearInterval(interval);
 
-    // -----------------------------
     // ✅ SHOW RESULT
-    // -----------------------------
     output.innerText = data.result;
 
-    // -----------------------------
     // 📊 TRACK GENERATION COUNT
-    // -----------------------------
-    const newGenCount = genCount + 1;
-    localStorage.setItem("genCount", newGenCount);
+    localStorage.setItem("genCount", genCount + 1);
 
-    // -----------------------------
-    // 📩 SHOW CAPTURE (ONLY ONCE)
-    // -----------------------------
-    if (!localStorage.getItem("captureShown")) {
+    // 📩 SHOW CAPTURE AFTER FIRST GENERATION (ONCE)
+    if (genCount === 0 && !unlocked) {
       captureBox.style.display = "block";
-      localStorage.setItem("captureShown", "true");
+      localStorage.setItem("contactUnlocked", "true"); // unlock immediately
     }
 
   } catch (error) {
     clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
   }
-}
-
-
-// on tally submit 
-window.onTallySubmit = function () {
-localStorage.setItem("contactSubmitted", "true");
-document.getElementById("captureBox").style.display = "none";
-};
-  
+      }
+      
