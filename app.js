@@ -40,8 +40,15 @@ async function generate() {
     clearInterval(interval);
 
     // ✅ SHOW RESULT
-    output.innerText = data.result;
-    document.getElementById("captureBox").style.display = "block";
+output.innerText = data.result;
+
+    
+    // ✅ SHOW contact capture AFTER first generation
+if (!window.captureShown) {
+  document.getElementById("captureBox").style.display = "block";
+  window.captureShown = true;
+    }
+    
     
 
   } catch (error) {
