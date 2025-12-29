@@ -58,6 +58,7 @@ if (!window.captureShown) {
 } */
 
 
+
 // 🔥 TEMPORARY MOBILE RESET (REMOVE AFTER CONFIRMING)
 if (!localStorage.getItem("storageResetDone")) {
   localStorage.clear();
