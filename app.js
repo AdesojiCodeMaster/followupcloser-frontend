@@ -57,22 +57,21 @@ if (!window.captureShown) {
   }
 } */
 
-async function generate() {
-  const lead = document.getElementById("lead").value;
-  const chat = document.getElementById("chat").value;
-  const type = document.getElementById("type").value;
-  const tone = document.getElementById("tone").value;
 
+// 🔥 TEMPORARY MOBILE RESET (REMOVE AFTER CONFIRMING)
+if (!localStorage.getItem("storageResetDone")) {
+  localStorage.clear();
+  localStorage.setItem("storageResetDone", "true");
+}
+
+async function generate() {
   const output = document.getElementById("output");
   const captureBox = document.getElementById("captureBox");
 
-  // -----------------------------
-  // 🔐 GENERATION GATE
-  // -----------------------------
   const genCount = Number(localStorage.getItem("genCount") || 0);
-  const unlocked = localStorage.getItem("contactUnlocked") === "true";
+  const unlocked = localStorage.getItem("unlocked") === "true";
 
-  // Allow only ONE free generation
+  // 🔒 HARD GATE: allow only 1 free generation
   if (genCount >= 1 && !unlocked) {
     captureBox.style.display = "block";
     output.innerText =
@@ -80,9 +79,7 @@ async function generate() {
     return;
   }
 
-  // -----------------------------
-  // ⏳ LOADING UX
-  // -----------------------------
+  // ⏳ Loading
   const loadingMessages = [
     "Understanding your situation…",
     "Thinking through the best follow-up for you…",
@@ -104,28 +101,32 @@ async function generate() {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lead, chat, type, tone })
+        body: JSON.stringify({
+          lead: lead.value,
+          chat: chat.value,
+          type: type.value,
+          tone: tone.value
+        })
       }
     );
 
     const data = await response.json();
     clearInterval(interval);
 
-    // ✅ SHOW RESULT
+    // ✅ Show result
     output.innerText = data.result;
 
-    // 📊 TRACK GENERATION COUNT
+    // 📊 Increment generation count
     localStorage.setItem("genCount", genCount + 1);
 
-    // 📩 SHOW CAPTURE AFTER FIRST GENERATION (ONCE)
-    if (genCount === 0 && !unlocked) {
+    // 📩 After FIRST generation → show capture & unlock
+    if (genCount === 0) {
       captureBox.style.display = "block";
-      localStorage.setItem("contactUnlocked", "true"); // unlock immediately
+      localStorage.setItem("unlocked", "true");
     }
 
-  } catch (error) {
+  } catch (err) {
     clearInterval(interval);
     output.innerText = "❌ Something went wrong. Please try again.";
   }
-      }
-      
+}
