@@ -71,8 +71,9 @@
       font-size: 13px;
       color: #666;
     }
-  </style>
+  </style>  
 </head>
+  
 <body>
 
 <div class="container">
@@ -249,40 +250,23 @@ Used by salespeople in real estate, auto sales, insurance, and service businesse
     
     <pre id="output">⏳ Waiting for input...</pre>
 
-  <form
-  action="https://tally.so/r/ODlRzY"
-  method="POST"
-  target="hidden_iframe"
-  id="tallyForm"
-  style="display:none;"
->
-  <input type="hidden" name="contact" id="tallyContact" />
-</form>
-
-<iframe name="hidden_iframe" style="display:none;"></iframe>
-
-<div id="captureBox" style="margin-top:20px; padding:16px; border:1px solid #e5e7eb; border-radius:8px;">
+  
+<div id="captureBox" style="display:none; margin-top:20px; padding:16px; border:1px solid #e5e7eb; border-radius:8px;">
   <p style="margin-bottom:8px; font-weight:500;">
     Save this follow-up and get better timing tips next time
   </p>
-
-  <input
-    type="text"
-    id="contact"
-    placeholder="Enter Email or WhatsApp Number"
-    style="width:100%; padding:10px; margin-bottom:10px;"
-  />
-
-  <button onclick="submitContact()" style="padding:10px 16px;">
-    Save my result
-  </button>
-
-  <p id="captureMsg" style="margin-top:8px; font-size:14px;"></p>
+  <iframe
+    data-tally-src="https://tally.so/embed/ODlRzY?hideTitle=1&transparentBackground=1"
+    loading="lazy"
+    width="100%"
+    height="140"
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    title="Contact capture"
+  ></iframe>
+<p id="captureMsg" style="margin-top:8px; font-size:14px;"></p>
 </div>
-  
-
-
-  
 </div>
 
   <div class="footer">
@@ -293,6 +277,28 @@ Used by salespeople in real estate, auto sales, insurance, and service businesse
 </div>
 
 <script src="app.js"></script>
+  <script>
+  var d = document,
+    w = "https://tally.so/widgets/embed.js",
+    v = function () {
+      if (typeof Tally !== "undefined") {
+        Tally.loadEmbeds();
+      } else {
+        d.querySelectorAll("iframe[data-tally-src]").forEach(function (e) {
+          e.src = e.dataset.tallySrc;
+        });
+      }
+    };
+  if (typeof Tally !== "undefined") v();
+  else if (!d.querySelector('script[src="' + w + '"]')) {
+    var s = d.createElement("script");
+    s.src = w;
+    s.onload = v;
+    s.onerror = v;
+    d.body.appendChild(s);
+  }
+  </script>
+  
 </body>
 </html>
   
