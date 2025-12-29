@@ -137,3 +137,10 @@ async function generate() {
   }
 }
 
+
+// on tally submit 
+window.onTallySubmit = function () {
+localStorage.setItem("contactSubmitted", "true");
+document.getElementById("captureBox").style.display = "none";
+};
+  
