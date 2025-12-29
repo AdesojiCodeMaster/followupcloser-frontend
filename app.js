@@ -1,15 +1,24 @@
+
+// 🔄 TEMP RESET FOR TESTING (REMOVE AFTER CONFIRMATION)
+if (!localStorage.getItem("resetDone")) {
+  localStorage.clear();
+  localStorage.setItem("resetDone", "true");
+}
+
+
+
 async function generate() {
   const output = document.getElementById("output");
   const captureBox = document.getElementById("captureBox");
 
-  const genCount = Number(localStorage.getItem("genCount") || 0);
+  let genCount = Number(localStorage.getItem("genCount") || 0);
   const unlocked = localStorage.getItem("generationUnlocked") === "true";
 
-  // 🔒 BLOCK AFTER 3 GENERATIONS
+  // 🔒 BLOCK ON 4TH ATTEMPT (AFTER 3 SUCCESSFUL)
   if (genCount >= 3 && !unlocked) {
-    captureBox.style.display = "block"; // 👈 FIX IS HERE
+    captureBox.style.display = "block";
     output.innerText =
-      "🔒 You’ve reached the free limit. Please submit the form below to continue.";
+      "🔒 You’ve reached the free limit. Please submit the form to continue.";
     return;
   }
 
@@ -50,8 +59,9 @@ async function generate() {
     // ✅ Show result
     output.innerText = data.result;
 
-    // 📊 Increment generation count AFTER success
-    localStorage.setItem("genCount", genCount + 1);
+    // ✅ Increment AFTER successful generation
+    genCount += 1;
+    localStorage.setItem("genCount", genCount);
 
   } catch (err) {
     clearInterval(interval);
