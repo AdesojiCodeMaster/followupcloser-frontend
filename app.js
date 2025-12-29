@@ -49,36 +49,3 @@ async function generate() {
     output.innerText = "❌ Something went wrong. Please try again.";
   }
 }
-
-
-
-
-//validation function 
-function isValidContact(value) {
-  const emailRegex = /\S+@\S+\.\S+/;
-  const phoneRegex = /^\+?\d{10,15}$/;
-  return emailRegex.test(value) || phoneRegex.test(value);
-    }
-
-
-
-//Submit function 
-function submitContact() {
-  const contactInput = document.getElementById("contact");
-  const tallyInput = document.getElementById("tallyContact");
-  const message = document.getElementById("captureMsg");
-  const value = contactInput.value.trim();
-
-  if (!isValidContact(value)) {
-    message.innerText = "Please enter a valid email or WhatsApp number.";
-    return;
-  }
-
-  tallyInput.value = value;
-
-  document.getElementById("tallyForm").submit();
-
-  message.innerText = "Saved! We’ll send you useful follow-up tips.";
-  contactInput.value = "";
-}
-  
