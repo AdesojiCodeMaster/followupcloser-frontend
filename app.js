@@ -1,8 +1,10 @@
 
 // 🔄 TEMP RESET FOR TESTING (REMOVE AFTER CONFIRMATION)
-if (!localStorage.getItem("resetDone")) {
-  localStorage.clear();
-  localStorage.setItem("resetDone", "true");
+const unlocked = localStorage.getItem("generationUnlocked") === "true";
+
+if (unlocked) {
+  const captureBox = document.getElementById("captureBox");
+  if (captureBox) captureBox.style.display = "none";
 }
 
 
